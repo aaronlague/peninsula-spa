@@ -1,0 +1,196 @@
+/*global Ply, jQuery, _ */
+/*jshint eqeqeq: true, curly: true, white: true */
+
+(function ($, undefined) {
+    
+    'use strict';
+
+    Ply.ui.define('cookie-message', {
+
+        __init: function () {
+            var self = this;
+            
+            if (!self.cookiesSupport()) {
+                self.view.hide();                
+                return;
+            } else {
+                // check host name
+                if (location.host.indexOf(".isobar.hk"))
+                    self.domain = "peninsula.isobar.hk";
+                else
+                    self.domain = "peninsula.com";
+                
+                self.onLocationDetection = $.proxy(self.onLocationDetection, self);
+                self.onError = $.proxy(self.onError, self);
+
+                if ($.cookie('country_isocode'))
+                    self.checkCountry($.cookie('country_isocode'));
+                else 
+                    geoip2.country(self.onLocationDetection, self.onError);                
+            }
+        },
+        __elements: {
+            configureBtn: 'a.configure',
+            saveConfigBtn: '.button.save-config',
+            radio: '[type="radio"]',
+            panel: '.panel'
+        },
+        cookiesSupport: function () {
+            return $.cookie('cookies_support', 'valid') && $.cookie('cookies_support') == 'valid';
+        },
+        onLocationDetection: function (location) {
+            var self = this,
+                countries = Ply.res.cookieCountries;
+            
+            if (location && location.country) {
+                var country = location.country;
+                
+                if (country.iso_code) {
+                    // put user countries into cookie for the current visit to use
+                    $.cookie('country_isocode', country.iso_code);
+                    
+                    self.checkCountry(country.iso_code);
+                }
+            }
+        },
+        onError: function (error) {            
+            var self = this;
+            
+            // if there's error for the IP detection, show the message by default
+            /*
+                if ($.cookie('functionality') != "yes")
+                    $.cookie('functionality', "yes", { expires: 730, path: '/' , domain: self.domain});
+                */
+                if ($.cookie('analytics') != "yes")
+                    $.cookie('analytics', "yes", { expires: 730, path: '/' , domain: self.domain});
+                
+                if ($.cookie('marketing') != "yes")
+                    $.cookie('marketing', "yes", { expires: 730, path: '/' , domain: self.domain});
+                        
+            self.showMessage();    
+            self.events();            
+        },
+        checkCountry: function (country_isocode) {            
+            var self = this,
+                countries = Ply.res.cookieCountries,
+                found = ($.inArray(country_isocode, countries) != -1);
+            
+            if (found) {
+                // if it's never set, set the values to opt-in by default
+                /*
+                if (!$.cookie('functionality'))
+                    $.cookie('functionality', "yes", { expires: 730, path: '/' , domain: self.domain});
+                */
+                if (!$.cookie('analytics'))
+                    $.cookie('analytics', "yes", { expires: 730, path: '/' , domain: self.domain});
+                
+                if (!$.cookie('marketing'))
+                    $.cookie('marketing', "yes", { expires: 730, path: '/' , domain: self.domain});
+                
+                self.showMessage();    
+                self.events();
+                // self.updateDataLayer();
+            } else {
+                // for those outside of law enforcement, enable all their cookies value
+                /*
+                if ($.cookie('functionality') != "yes")
+                    $.cookie('functionality', "yes", { expires: 730, path: '/' , domain: self.domain});
+                */
+                if ($.cookie('analytics') != "yes")
+                    $.cookie('analytics', "yes", { expires: 730, path: '/' , domain: self.domain});
+                
+                if ($.cookie('marketing') != "yes")
+                    $.cookie('marketing', "yes", { expires: 730, path: '/' , domain: self.domain});
+                
+                self.view.hide();
+            }
+        },
+        events: function () {
+            var self = this;
+            
+            self.elements.configureBtn.on('click', function (e) {
+                self.elements.panel.removeClass("hidden");                
+                e.preventDefault();
+            });
+            
+            self.elements.saveConfigBtn.on('click', function (e) {
+                var elements = self.elements,
+                    radio = elements.radio,
+                    functionality = radio.filter("[name='functionality']:checked"),
+                    analytics = radio.filter("[name='analytics']:checked"),
+                    marketing = radio.filter("[name='marketing']:checked");
+                /*
+                if (functionality)
+                    $.cookie('functionality', functionality.val(), { expires: 730, path: '/' , domain: self.domain});
+                */
+                if (analytics)
+                    $.cookie('analytics', analytics.val(), { expires: 730, path: '/' , domain: self.domain});
+                
+                if (marketing)
+                    $.cookie('marketing', marketing.val(), { expires: 730, path: '/' , domain: self.domain});
+                
+                self.elements.panel.addClass("hidden");
+                
+                e.preventDefault();
+            });
+            
+            self.elements.radio.on('change', function () {
+                $(this).parents("li").find(".selected").removeClass("selected");
+                $(this).parent().addClass("selected");
+            });
+            
+            self.window.scroll(function () {
+                // when scroll to page bottom, make it follow page flow to show full footer
+                if (self.window.scrollTop() + self.window.height() == self.document.height()) {
+                    self.view.css({
+                        position: 'static'
+                    });
+                } else {
+                    self.view.css({
+                        position: 'fixed'
+                    });
+                }
+            });
+            
+            return;
+        },
+        showMessage: function () {
+            var self = this,
+                elements = self.elements,
+                radio = elements.radio,
+                // fVal = $.cookie("functionality"),
+                aVal = $.cookie("analytics"),
+                mVal = $.cookie("marketing");
+            
+            radio.parent().removeClass("checked");
+            /*
+            $("#functionality-" + fVal).attr("checked", true);
+            $("#functionality-" + fVal).parent().addClass("selected");
+            */
+            $("#analytics-" + aVal).attr("checked", true);
+            $("#analytics-" + aVal).parent().addClass("selected");
+            
+            $("#marketing-" + mVal).attr("checked", true);
+            $("#marketing-" + mVal).parent().addClass("selected");
+            
+            self.view.show();
+        }
+        /*,
+        updateDataLayer: function () {
+            var self = this,
+                elements = self.elements,
+                radio = elements.radio,
+                // fVal = $.cookie("functionality"),
+                aVal = $.cookie("analytics"),
+                mVal = $.cookie("marketing");
+            
+            if (dataLayer) {
+                dataLayer.push({
+                    'analyticsCookie': aVal,
+                    'marketingCookie': mVal
+                });
+            }
+        }*/
+    });
+
+})(jQuery);

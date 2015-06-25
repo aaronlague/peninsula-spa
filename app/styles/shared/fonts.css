@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "Futura Book";
+    src: url("../../fonts/Futura/Book/57a6731b-fa5c-4c8a-bea8-e2f1a287f309.eot?#iefix");
+    src: url("../../fonts/Futura/Book/57a6731b-fa5c-4c8a-bea8-e2f1a287f309.eot?#iefix") format("eot"), url("../../fonts/Futura/Book/4d0e252c-d811-4a5d-a7f3-6ad72c6b76f2.woff") format("woff"), url("../../fonts/Futura/Book/54250d43-02be-4ff9-b802-a4ea104a0611.ttf") format("truetype"), url("../../fonts/Futura/Book/15c556fc-4608-4b01-8a0d-9c8631c8bd74.svg#15c556fc-4608-4b01-8a0d-9c8631c8bd74") format("svg")
+}
+@font-face {
+    font-family: "Minion Regular";
+    src: url("../../fonts/Minion/Regular/35d9d14d-a31d-4d9b-a998-00ffc9bd46a4.eot?#iefix");
+    src: url("../../fonts/Minion/Regular/35d9d14d-a31d-4d9b-a998-00ffc9bd46a4.eot?#iefix") format("eot"), url("../../fonts/Minion/Regular/62100580-a2d1-4d98-bb14-d4c4c3f1a5ba.woff") format("woff"), url("../../fonts/Minion/Regular/7ae8e168-1c29-4fcb-bb59-0043c943df3b.ttf") format("truetype"), url("../../fonts/Minion/Regular/cfa664d4-e518-4a49-b8a3-fccec93c29c1.svg#cfa664d4-e518-4a49-b8a3-fccec93c29c1") format("svg")
+}
+@font-face {
+    font-family: "Minion Italic";
+    src: url("../../fonts/Minion/Italic/0d708c6f-d31c-49ad-b92e-ea37b7ba762b.eot?#iefix");
+    src: url("../../fonts/Minion/Italic/0d708c6f-d31c-49ad-b92e-ea37b7ba762b.eot?#iefix") format("eot"), url("../../fonts/Minion/Italic/e364b06d-aac3-4a54-84ff-4b3a2860debb.woff") format("woff"), url("../../fonts/Minion/Italic/6346c02d-13da-4d5c-ab2e-13e40d7f24c2.ttf") format("truetype"), url("../../fonts/Minion/Italic/8cda8fb2-6a3e-4e20-b063-4fbfca0025e5.svg#8cda8fb2-6a3e-4e20-b063-4fbfca0025e5") format("svg")
+}

@@ -14,7 +14,7 @@ gulp.task('styles', function () {
     .pipe($.sass({
       outputStyle: 'nested', // libsass doesn't support expanded yet
       precision: 10,
-      includePaths: ['.'],
+      includePaths: ['.', 'bower_components/bootstrap-sass/assets/stylesheets'],
       onError: console.error.bind(console, 'Sass error:')
     }))
     .pipe($.postcss([
@@ -40,13 +40,14 @@ gulp.task('html', ['styles'], function () {
 
   return gulp.src('app/*.html')
     .pipe(assets)
-    .pipe($.if(!argv.production, $.if('*.js', $.if('!**/**/spa-booking.js', $.uglify()))))
+    .pipe($.if(!argv.production, $.if('*.js', $.ngAnnotate())))
+    .pipe($.if(!argv.production, $.if('*.js', $.if('!**/**/booking.js', $.uglify()))))
     .pipe($.if(argv.production, $.if('*.js', $.uglify())))
+    .pipe($.if(!argv.production, $.if('*.css', $.if('!**/**/booking.css', $.csso()))))
     .pipe($.if(argv.production, $.if('*.css', $.csso())))
     .pipe(assets.restore())
     .pipe($.useref())
-    // minify html output
-    // .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
+    // .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true}))) // minigy html output
     .pipe(gulp.dest('dist'));
 });
 

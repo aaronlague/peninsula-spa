@@ -1,0 +1,201 @@
+/******
+
+    SPA/WELLNESS GRID
+
+*******/
+.spa-index .grid-set
+{
+    border-top:solid 1px #afa593;
+    border-left:solid 1px #afa593;
+    border-right:solid 1px #afa593;
+}
+
+    .spa-index .grid-set .grid-item
+    {
+        overflow:hidden;
+        height: 468px;
+        border-bottom:solid 1px #afa593;
+    }
+
+    .spa-index .grid-set .grid-item.small
+    {
+        height: 355px;
+    }
+
+        .spa-index .grid-set .grid-item .item-img
+        {
+            float:left;
+        }
+
+        .spa-index .grid-set .grid-item .item-img
+        {
+            width:632px;
+        }
+
+        .spa-index .grid-set .grid-item .item-details
+        {
+            text-align:center;
+            width:271px;
+            padding:0 25px;
+            float:left;
+            height: 100%;
+            border-left:solid 1px #afa593;
+            border-right:solid 0px #afa593;
+        }
+
+        .spa-index .grid-set .grid-item.small .item-details
+        {
+            border-right:solid 1px #afa593;
+            border-left:solid 0px #afa593;
+        }
+
+        @media only screen and (max-width: 1279px)
+        {
+            .spa-index .grid-set .grid-item
+            {
+                height:320px;
+            }
+
+            .spa-index .grid-set .grid-item.small
+            {
+                height: 243px;
+            }
+
+            .spa-index .grid-set .grid-item .item-img
+            {
+                width: 439px;
+            }
+        }
+            .no-mediaqueries.mq-1024px .spa-index .grid-set .grid-item
+            {
+                height:320px;
+            }
+
+            .no-mediaqueries.mq-1024px .spa-index .grid-set .grid-item.small
+            {
+                height: 243px;
+            }
+
+            .no-mediaqueries.mq-1024px .spa-index .grid-set .grid-item .item-img
+            {
+                width: 439px;
+            }
+
+        @media only screen and (min-width:1440px)
+        {
+            .spa-index .grid-set .grid-item
+            {
+                height:548px;
+            }
+
+            .spa-index .grid-set .grid-item.small
+            {
+                height: 416px;
+            }
+
+            .spa-index .grid-set .grid-item .item-img
+            {
+                width: 750px;
+            }
+        }
+            .no-mediaqueries.mq-1440px .spa-index .grid-set .grid-item
+            {
+                height:548px;
+            }
+
+            .no-mediaqueries.mq-1440px .spa-index .grid-set .grid-item.small
+            {
+                height: 416px;
+            }
+
+            .no-mediaqueries.mq-1440px .spa-index .grid-set .grid-item .item-img
+            {
+                width: 750px;
+            }
+
+        /*.spa-index .grid-set .grid-item.small .item-details
+        {
+            height: 306px;
+        }*/
+
+            /*
+            .spa-index .item-details
+            {
+                display: table;
+            }
+
+                .spa-index .item-details .middle
+                {
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+            */
+
+            /* the following method is used to vertically centre content, as the
+            method above doesn't work on Safari */
+            .spa-index .item-details {
+                white-space: nowrap;
+            }
+
+            .spa-index .item-details > .middle,
+            .spa-index .item-details:before {
+                content: '';
+                display: inline-block;
+                vertical-align: middle;
+                white-space: normal;
+            }
+
+            .spa-index .item-details:before {
+                height: 100%;
+                margin-right: -0.25em;
+            }
+
+            .spa-index .item-details span,
+            .spa-index .item-details a
+            {
+                display:block;
+            }
+
+            .spa-index .item-details .item-title
+            {
+                font-size:26px;
+                font-family:"Minion Italic", Times, "Times New Roman", serif;
+                color:#766b58;
+                margin-bottom:10px;
+            }
+
+            .spa-index .item-details .item-description
+            {
+                font-size:13px;
+                color:#585858;
+                line-height:20px;
+                margin-bottom:20px;
+            }
+
+            .spa-index .item-details table
+            {
+                font-size:13px;
+                color:#666666;
+                margin-bottom:20px;
+                width: 100%;
+            }
+
+                .spa-index .item-details table p
+                {
+                    display:inline;
+                }
+
+                .spa-index .item-details table .title
+                {
+                    text-transform:uppercase;
+                    color:#000;
+                    margin-right:10px;
+                    text-align:right;
+                    width: 70px;
+                }
+
+                .spa-index .item-details table .details
+                {
+                    padding-left:20px;
+                    text-align:left;
+                }

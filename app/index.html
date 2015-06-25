@@ -1,64 +1,541 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="" ng-app="spa.booking">
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>spa booking</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peninsula Hotels | Spa Online Booking</title>
 
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
-  <!-- build:css styles/vendor.css -->
-  <!-- bower:css -->
-  <!-- endbower -->
-  <!-- endbuild -->
-
-  <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- endbuild -->
-
-  <!-- build:js scripts/vendor/modernizr.js -->
-  <script src="/bower_components/modernizr/modernizr.js"></script>
-  <!-- endbuild -->
-</head>
-<body>
-    <!--[if lt IE 10]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-      <![endif]-->
-      <div class="wrap">
-        <div class="intro">
-          <h1 class="intro__head">Allow yourself to make mistakes, explore!</h1>
-          <p class="intro__lead"><em>UpFront</em> &mdash; a swift front-end starter by Jubal Mabaquiao</p>
-          <ul class="packages">
-            <li><a class="package" href="https://github.com/h5bp/html5-boilerplate">HTML5 Boilerplate</a></li>
-            <li><a class="package" href="http://sass-lang.com/">SASS</a></li>
-
-            <li><a class="package" href="http://modernizr.com/">Modernizr</a></li>
-          </ul>
-
-      </div>
-    </div>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
-
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
     <!-- endbower -->
+    <link rel="stylesheet" href="styles/bootstrap.css">
     <!-- endbuild -->
 
-        <!-- build:js scripts/main.js -->
-        <script src="scripts/lib/docready.js"></script>
-        <script src="scripts/lib/extend.js"></script>
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+    <!-- NOTE: this is a copy of the existing /files/the-peninsula-hotels/default/Styles/combined.css -->
+    <!-- build:css styles/combined.css -->
+    <link rel="stylesheet" href="styles/combined.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/booking.css -->
+    <link rel="stylesheet" href="styles/booking.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+</head>
+<body ng-cloak>
+<div class="page" ng-controller="MainController" ng-init="init()">
+
+    <div class="page__title">
+        <h1 class="content-title multiline">
+            <span class="subhead">Peninsula Hotels</span>Spa Online Booking
+        </h1>
+    </div>
+
+    <form name="bookingForm" ng-submit="bookingFormSubmit()" novalidate>
+
+        <div class="formpage formpage--1" ng-show="activeFormPage === 1">
+            <div class="column column--half">
+                <h5 class="formpage__steptitle">1. Select a treatment</h5>
+
+                <div class="field field--dropdown">
+                    <input type="hidden" name="booking.type" ng-model="booking.type" ng-value="booking.type" required>
+
+                    <div class="btn-group ddown" dropdown>
+                        <button type="button" class="btn btn-default ddown__button" dropdown-toggle>
+                            {{ treatmentType || 'Please select a treatment type' }}
+                            <span class="ddown__caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="type in treatmentTypes"><a
+                                    ng-click="setTreatmentType(type.CategoryId, type.CategoryName)">{{ type.CategoryName
+                                }}</a></li>
+                        </ul>
+                    </div>
+                    <div class="field__tooltip-anchor field__tooltip-anchor--dummy">
+                        <i class="field__tooltip-icon"></i>
+                    </div>
+                </div>
+
+                <div class="field field--dropdown">
+                    <input type="hidden" name="booking.package" ng-model="booking.package" ng-value="booking.package"
+                           required>
+
+                    <div class="btn-group ddown" dropdown>
+                        <button type="button" class="btn btn-default ddown__button" ng-disabled="!booking.type"
+                                dropdown-toggle>
+                            {{ treatmentPackage || 'Please select a treatment package' }}
+                            <span class="ddown__caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="package in treatmentPackages | filter: { CategoryName: treatmentType }"><a
+                                    ng-click="setTreatmentPackage(package.TemplateID, removeQuotes(package.Name))">{{
+                                removeQuotes(package.Name) }}</a></li>
+                        </ul>
+                    </div>
+                    <a class="field__tooltip-anchor" tooltip-placement="right" tooltip-class="field__tooltip"
+                       tooltip-html="treatmentDescription"><i class="field__tooltip-icon"></i></a>
+                </div>
+
+                <div class="field field--dropdown">
+                    <input type="hidden" name="booking.gender" ng-model="booking.gender" ng-value="booking.gender"
+                           required>
+
+                    <div class="btn-group ddown" dropdown>
+                        <button type="button" class="btn btn-default ddown__button" ng-disabled="!booking.package"
+                                dropdown-toggle>
+                            {{ therapistGender || 'Preferred therapist gender' }}
+                            <span class="ddown__caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a ng-click="setTherapistGender('MALE', 'Male')">Male</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTherapistGender('FEMALE', 'Female')">Female</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <h5 class="formpage__steptitle">2. Select desire date</h5>
+
+                <p ng-if="gettingUnvailableDates" ><i class="icon icon--loading"></i> Fetching available dates&hellip;</p>
+                <br>
+
+                <div class="field field--datepicker" ng-init="updateDatePicker()">
+                    <input type="hidden" name="booking.datetime" ng-model="booking.datetime" ng-value="booking.datetime"
+                           required>
+
+                    <div ng-show="showCalendar === false">An error occured while generating the calendar</div>
+                    <datepicker ng-show="showCalendar === true" ng-model="treatmentDate"
+                                date-disabled="disableDates(date)"></datepicker>
+                </div>
+
+            </div>
+
+            <div class="column column--half">
+                <h5 class="formpage__steptitle">3. Select available time</h5>
+
+                <p ng-if="gettingAvailableTime" ><i class="icon icon--loading"></i> Fetching available times&hellip;</p>
+                <p class="error" ng-if="!gettingAvailableTime && apiErrorTime">
+                    <span ng-if="apiErrorTime.result==='fail'">{{ apiErrorTime.error }}</span>
+                        <span ng-if="apiErrorTime.result==='unknown'">
+                            There was a problem connecting to the booking server
+                        </span>
+                </p>
+
+                <div class="field field--timepicker">
+                    <div class="btn-group timepicker">
+                        {{ availableTimes.data.times }}
+                        <button ng-repeat="time in availableTimes" type="button" class="btn btn-default timepicker__btn"
+                                ng-class="{ active: treatmentTime === time }" ng-disabled="!timepicker"
+                                ng-click="setTreatmentTime(time)">{{ ampmTime(time) | date:'h:mm a' }}
+                        </button>
+                    </div>
+                </div>
+
+                <br>
+
+                <p>Not all treatments are available for online booking. If you do not find the treatment you desire,
+                    please contact us at +852 2696 6682 for enquiries.</p>
+                <br>
+
+                <div class="field field--summary">
+                    <p>Treatment price and duration</p>
+
+                    <p class="field__hilite" ng-if="booking.datetime && booking.package">
+                        <span>HKD {{ (treatmentPackages | filter: { TemplateID: booking.package })[0]['ChargeAmount'] | number }} for {{ getTreatmentDuration(treatmentPackage) }}</span>
+                    </p>
+
+                    <p ng-if="!booking.package || !booking.datetime"><b>Complete steps 1 to 3 to get a quote</b></p>
+                </div>
+
+                <div class="formpage__navigator">
+                    <button type="button" href="#" class="formpage__btn formpage__btn--next" ng-disabled="!pageIsValid1"
+                            ng-click="activeFormPage = 2">Next <span class="icon icon--rsaquo"></span></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="formpage formpage--2" ng-show="activeFormPage === 2">
+
+            <div class="column column--full">
+                <p>Please fill in the following information. Mandatory fields are marked as *, but by providing more
+                    information it will allow us to better address your needs.</p>
+                <br>
+            </div>
+
+            <div class="column column--third">
+                <div class="field field--dropdown field--narrow">
+                    <label for="booking.title">Title: *</label>
+                    <input type="hidden" name="booking.title" ng-model="booking.title" ng-value="booking.title"
+                           required>
+
+                    <div class="btn-group ddown" dropdown="">
+                        <button type="button" class="btn btn-default ddown__button ng-binding" dropdown-toggle=""
+                                aria-haspopup="true" aria-expanded="false">
+                            {{ patientTitle || '&nbsp;' }}
+                            <span class="ddown__caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="setPatientTitle('mr', 'Mr')">Mr</a></li>
+                            <li><a ng-click="setPatientTitle('ms', 'Ms')">Ms</a></li>
+                            <li><a ng-click="setPatientTitle('mrs', 'Mrs')">Mrs</a></li>
+                            <li><a ng-click="setPatientTitle('dr', 'Dr')">Dr</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="field field--text"
+                     ng-class="{ 'error': (bookingForm['booking.firstname'].$touched && bookingForm['booking.firstname'].$invalid) }">
+                    <label for="booking.firstname">First Name: *</label>
+                    <input type="text" name="booking.firstname" ng-model="booking.firstname" ng-pattern="regexEnglish"
+                           ng-maxlength="30" required>
+
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.firstname'].$touched && bookingForm['booking.firstname'].$error.required">Please enter your first name.</span>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.firstname'].$touched && bookingForm['booking.firstname'].$error.pattern">Please enter only letters.</span>
+                </div>
+
+                <div class="field field--text"
+                     ng-class="{ 'error': (bookingForm['booking.lastname'].$touched && bookingForm['booking.lastname'].$invalid) }">
+                    <label for="booking.lastname">Last Name: *</label>
+                    <input type="text" name="booking.lastname" ng-model="booking.lastname" ng-pattern="regexEnglish"
+                           ng-maxlength="30" required>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.lastname'].$touched && bookingForm['booking.lastname'].$error.required">Please enter your last name.</span>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.lastname'].$touched && bookingForm['booking.lastname'].$error.pattern">Please enter only letters.</span>
+                </div>
+
+                <div class="field field--text"
+                     ng-class="{ 'error': (bookingForm['booking.mobile'].$touched && bookingForm['booking.mobile'].$invalid) }">
+                    <label for="booking.mobile">Mobile: *</label>
+                    <input type="text" name="booking.mobile" ng-model="booking.mobile" ng-maxlength="30"
+                           ng-pattern="regexPhone" required>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.mobile'].$touched && bookingForm['booking.mobile'].$error.required">Please enter your telephone number.</span>
+                    <span class="error__message" ng-if="bookingForm['booking.mobile'].$error.pattern">Please enter a valid telephone number (e.g. "1-555-123-4567")</span>
+                </div>
+
+                <div class="field field--email"
+                     ng-class="{ 'error': (bookingForm['booking.email'].$touched && bookingForm['booking.email'].$invalid) }">
+                    <label for="booking.email">Email: *</label>
+                    <input type="email" name="booking.email" ng-model="booking.email" ng-maxlength="30" required>
+                    <span ng-if="emailValid">err</span>
+                    <span class="error__message" ng-if="bookingForm['booking.email'].$error.email ">Please enter a valid email address (ex: "john.smith@email.com")</span>
+                </div>
+
+            </div>
+
+            <div class="column column--third">
+
+                <div class="field field--text"
+                     ng-class="{ 'error': (bookingForm['booking.ccname'].$touched && bookingForm['booking.ccname'].$invalid) }">
+                    <label for="booking.ccname">Credit Card Cardholder’s name: *</label>
+                    <input type="text" name="booking.ccname" ng-pattern="regexEnglish" ng-maxlength="30"
+                           ng-model="booking.ccname" required>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.ccname'].$touched && bookingForm['booking.ccname'].$error.required">Please enter a card name.</span>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.ccname'].$touched && bookingForm['booking.ccname'].$error.pattern">Please enter only letters.</span>
+                </div>
+
+                <div class="field field--text"
+                     ng-class="{ 'error': (bookingForm['booking.ccnumber'].$touched && bookingForm['booking.ccnumber'].$invalid) }">
+                    <label for="booking.ccnumber">Credit Card Number: *</label>
+                    <input type="text" name="booking.ccnumber" ng-model="booking.ccnumber" ng-pattern="regexCCNumber"
+                           ng-blur="stripWhiteSpace($event)" required>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.ccnumber'].$touched && bookingForm['booking.ccnumber'].$error.pattern">Please enter a valid card number.</span>
+                </div>
+
+                <div class="fieldset" ng-class="{ 'error': ccExpire <= booking.datetime }">
+
+                    <div class="field field--dropdown">
+                        <label for="booking.title">Expiration: *</label>
+                        <input type="hidden" name="booking.ccmonth" ng-model="booking.ccmonth"
+                               ng-value="booking.ccmonth" required>
+
+                        <div class="btn-group ddown" dropdown="">
+                            <button type="button" class="btn btn-default ddown__button ng-binding" dropdown-toggle=""
+                                    aria-haspopup="true" aria-expanded="false">
+                                {{ patientCCMonth || 'MM' }}
+                                <span class="ddown__caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <!--
+                                  @function: setCreditCardMonth
+                                  @param1: input value
+                                  @param2: input label
+                                  @usage: setCreditCardMonth('form_submitted_value', 'Value to appear on the front-end');
+                                -->
+                                <li><a ng-click="setCreditCardMonth('0', '01')">01</a></li>
+                                <li><a ng-click="setCreditCardMonth('1', '02')">02</a></li>
+                                <li><a ng-click="setCreditCardMonth('2', '03')">03</a></li>
+                                <li><a ng-click="setCreditCardMonth('3', '04')">04</a></li>
+                                <li><a ng-click="setCreditCardMonth('4', '05')">05</a></li>
+                                <li><a ng-click="setCreditCardMonth('5', '06')">06</a></li>
+                                <li><a ng-click="setCreditCardMonth('6', '07')">07</a></li>
+                                <li><a ng-click="setCreditCardMonth('7', '08')">08</a></li>
+                                <li><a ng-click="setCreditCardMonth('8', '09')">09</a></li>
+                                <li><a ng-click="setCreditCardMonth('9', '10')">10</a></li>
+                                <li><a ng-click="setCreditCardMonth('10', '11')">11</a></li>
+                                <li><a ng-click="setCreditCardMonth('11', '12')">12</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="field field--dropdown">
+                        <input type="hidden" name="booking.ccyear" ng-model="booking.ccyear" ng-value="booking.ccyear"
+                               required>
+
+                        <div class="btn-group ddown" dropdown="">
+                            <button type="button" class="btn btn-default ddown__button ng-binding" dropdown-toggle=""
+                                    aria-haspopup="true" aria-expanded="false">
+                                {{ patientCCYear || 'YY' }}
+                                <span class="ddown__caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <!--
+                                  @function: setCreditCardYear
+                                  @param1: input value
+                                  @param2: input label
+                                  @usage: setCreditCardYear('form_submitted_value', 'Value to appear on the front-end');
+                                -->
+                                <li><a ng-click="setCreditCardYear('2015', '2015')">2015</a></li>
+                                <li><a ng-click="setCreditCardYear('2016', '2016')">2016</a></li>
+                                <li><a ng-click="setCreditCardYear('2017', '2017')">2017</a></li>
+                                <li><a ng-click="setCreditCardYear('2018', '2018')">2018</a></li>
+                                <li><a ng-click="setCreditCardYear('2019', '2019')">2019</a></li>
+                                <li><a ng-click="setCreditCardYear('2020', '2020')">2020</a></li>
+                                <li><a ng-click="setCreditCardYear('2021', '2021')">2021</a></li>
+                                <li><a ng-click="setCreditCardYear('2022', '2022')">2022</a></li>
+                                <li><a ng-click="setCreditCardYear('2023', '2023')">2023</a></li>
+                                <li><a ng-click="setCreditCardYear('2024', '2024')">2024</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span class="error__message" ng-if="ccExpire <= booking.datetime">Please enter a card that expires after your checkout date.</span>
+                </div>
+                <p>We will only charge the credit card if the customer do not show up for the appointment after
+                    confirmation on the booking.</p>
+
+            </div>
+
+            <div class="column column--third">
+
+                <div class="field field--radio">
+                    <label for="booking.hotel">Will you be staying at the hotel?</label>
+                    <input type="hidden" name="booking.hotel" ng-model="booking.hotel" ng-value="booking.hotel">
+
+                    <div class="btn-group radio">
+                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="true">Yes</label>
+                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="false">No</label>
+                    </div>
+                </div>
+
+                <div class="field field--textarea"
+                     ng-class="{ 'error': (bookingForm['booking.request'].$touched && bookingForm['booking.request'].$invalid) }">
+                    <label for="booking.request">Special Request</label>
+                    <textarea name="booking.request" ng-pattern="regexEnglish" ng-model="booking.request"></textarea>
+                    <span class="error__message"
+                          ng-if="bookingForm['booking.request'].$touched && bookingForm['booking.request'].$error.pattern">Please enter only letters.</span>
+                </div>
+
+                <p>Please refer to the <a href="#">Data Privacy and Security Policy</a> for information about making
+                    reservations through our website.</p>
+
+            </div>
+
+            <div class="column column--full formpage__navigator">
+                <button type="button" href="#" class="formpage__btn formpage__btn--back" ng-click="activeFormPage = 1">
+                    <span class="icon icon--lsaquo"></span> Back
+                </button>
+                <button type="button" href="#" class="formpage__btn formpage__btn--next" ng-click="activeFormPage = 3"
+                        ng-disabled="!pageIsValid2">Next <span class="icon icon--rsaquo"></span></button>
+            </div>
+
+        </div>
+
+        <div class="formpage formpage--3" ng-show="activeFormPage === 3">
+
+            <div class="column column--full">
+                <p>Please Review and Confirm your Information.</p>
+                <br>
+            </div>
+
+            <div class="column column--content-left">
+                <div class="column column--full">
+                    <div class="summary summary--info">
+                        <h4 class="summary__heading">Your Information</h4>
+                        <ul>
+                            <li class="summary__detail"><span class="summary__label">Name</span> {{ booking.firstname }}
+                                {{ booking.lastname }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Credit Card Holder’s Name</span> {{
+                                booking.ccname }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Email</span> {{ booking.email }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Credit Card Number</span> {{
+                                booking.ccnumber ? hideNumbers(booking.ccnumber) : '' }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Mobile</span> {{ booking.mobile }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Expiration Date</span> {{
+                                patientCCMonth }} / {{ patientCCYear }}
+                            </li>
+                            <!-- <li class="summary__detail"><span class="summary__label">Preferred Gender of Therapist</span> {{ therapistGender }}</li> -->
+                            <li class="summary__detail"><span
+                                    class="summary__label">Will you be staying at the hotel?</span> {{ !booking.hotel ?
+                                (booking.hotel!=undefined ? 'No': 'Not specified') : 'Yes' }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="summary summary--request">
+                        <h4 class="summary__heading">Your Request</h4>
+
+                        <div>{{ booking.request || 'You have not provided any special requests.'}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column column--sidebar-right">
+                <div class="column column--full">
+                    <div class="summary summary--appointment">
+                        <h4 class="summary__heading">Your Appointment</h4>
+                        <ul>
+                            <li class="summary__detail"><span class="summary__label">Treatment:</span> {{
+                                treatmentPackage }} <a class="field__tooltip-anchor" tooltip-placement="left"
+                                                       tooltip-class="field__tooltip"
+                                                       tooltip-html="treatmentDescription"><i
+                                        class="field__tooltip-icon"></i></a></li>
+                            <li class="summary__detail"><span class="summary__label">Date:</span> {{ treatmentDate |
+                                date }}
+                            </li>
+                            <li class="summary__detail"><span class="summary__label">Time:</span> {{
+                                ampmTime(treatmentTime) | date:'h:mm a' }}
+                            </li>
+                            <!-- TODO: fix console error here:
+                            <li class="summary__detail"><span class="summary__label">Price and Duration:</span> HKD {{ (treatmentPackages | filter: { TemplateID: booking.package })[0]['ChargeAmount'] | number }} for {{ getTreatmentDuration(treatmentPackage) }}</li> -->
+                        </ul>
+                        <br>
+
+                        <p>Please note that your treatment is not confirmed until you are contacted by The Spa.</p>
+                        <br>
+                        <input type="hidden" name="booking.subscribe" ng-model="booking.subscribe"
+                               ng-value="booking.subscribe">
+                        <input type="hidden" name="booking.agree" ng-model="booking.agree" ng-value="booking.agree"
+                               required>
+
+                        <div class="field field--checkbox">
+                            <label class="checkbox" ng-model="booking.subscribe" btn-checkbox="">Subscribe to our Peninsula Newsletter</label>
+                        </div>
+                        <div class="field field--checkbox">
+                            <label class="checkbox" ng-model="booking.agree" btn-checkbox="">I have read and accept
+                                the </label> <a href="#">Terms &amp; Conditions.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p ng-if="apiErrorSubmit.result" class="error text-center">
+                <span ng-if="apiErrorSubmit.result==='fail'">{{ apiErrorSubmit }}</span>
+                <span ng-if="apiErrorSubmit.result==='unknown'">Can't connect to booking server</span>
+            </p>
+            <div class="column column--full formpage__navigator">
+
+                <button type="button" href="#" class="formpage__btn formpage__btn--back" ng-click="activeFormPage = 2">
+                    <span class="icon icon--lsaquo"></span> Back
+                </button>
+                <button type="submit" href="#" class="formpage__btn formpage__btn--next"
+                        ng-disabled="bookingForm.$invalid || !booking.agree || bookingFormSubmitting">Book Now <span
+                        class="icon"
+                        ng-class="{ 'icon--rsaquo': !bookingFormSubmitting, 'icon--loading': bookingFormSubmitting }"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="formpage formpage--4" ng-show="activeFormPage === 4">
+            <div class="column column--full">
+                <div class="thankyou__header">
+                    <p><strong>Thank you!</strong></p>
+
+                    <p>Your booking number is {{ submitSuccess.confirmationNumber }}</p>
+                </div>
+            </div>
+            <div class="column column--third">
+                <h4 class="summary__heading">Your Appointment</h4>
+            </div>
+            <div class="column column--third thankyou__detail">
+                <ul>
+                    <li class="summary__detail"><span class="summary__label">Name:</span>  {{ booking.firstname }} {{ booking.lastname }}</li>
+                    <li class="summary__detail"><span class="summary__label">Treatment:</span> {{ treatmentPackage }}</li>
+                    <li class="summary__detail"><span class="summary__label">Date:</span> {{ treatmentDate | date:'fullDate' }}</li>
+                    <li class="summary__detail"><span class="`summary__label">Time:</span> {{ ampmTime(treatmentTime)
+                        | date:'h:mm a' }}</li>
+                    <li class="summary__detail"><span class="summary__label">Price and Duration:</span>
+                        {{ treatmentPrice ? treatmentPrice : '' | currency:"HKD " }} for {{ treatmentPackage? getTreatmentDuration(treatmentPackage) : '' }}
+                    </li>
+                </ul>
+            </div>
+            <div class="column column--third" class="thankyou__calendar">
+                <p>We will soon contact you to confirm your booking. If you have any questions please feel free to
+                    contact us at +852 2696 6682.</p>
+
+                <div class="ics">
+                    <button type="button" class="button--ics"><i class="icon icon--calendar"></i> Add to calendar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<!-- <script>
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='https://www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-X');ga('send','pageview');
+</script> -->
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="/bower_components/jQuery/dist/jquery.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js scripts/booking.js -->
+<script src="scripts/booking.js"></script>
+<!-- endbuild -->
+
+<script>
+    /* TODO: dynamically fill with appropriate variables based on environment */
+    angular.module('spa.booking')
+            .value('API', {
+                languageCode: 'en',
+                hotelJSON: 'http://www.peninsula.isobar.hk/en/SpaAPI/hotel?hotel=PHK',
+                unavailableDates: 'http://www.peninsula.isobar.hk/en/SpaAPI/getTreatmentDates',
+                availableTimes: 'http://www.peninsula.isobar.hk/en/SpaAPI/getTreatmentTimes',
+                bookingFormSubmit: 'http://www.peninsula.isobar.hk/en/SpaAPI/createBooking'
+            });
+</script>
+
 </body>
-  </html>
+</html>

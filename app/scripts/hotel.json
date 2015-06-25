@@ -1,0 +1,94 @@
+{
+    "hotel": {
+        "id": "PHK",
+        "hotelCode": "PHK",
+        "cmsID": "hong_kong",
+        "name": "The Peninsula Hong Kong",
+        "hotelImage": "http://hongkong.peninsula.com/files/the-peninsula-hotels/default/images/logo.png",
+        "currency": "HKD",
+        "timezone": "China Standard Time",
+        "offset": "08:00:00",
+        "localTime": "2015-06-30T17:52:16.5748847",
+        "phone": "+852 2920 2888",
+        "phoneTollFree": "+852 2910 1628",
+        "email": "spaphk@peninsula.com",
+        "description1": "Enjoy Complimentary Room Upgrade",
+        "description2": "Enjoy a guaranteed room upgrade when you book any room rate or package on our website for stays from 1 June until 31 August 2015.<br />\n<br />\nGuaranteed upgrade only valid for&nbsp;Superior Room to Deluxe Room,&nbsp;Deluxe Room to Deluxe Courtyard Room &amp;&nbsp;Deluxe Courtyard Room to Grand Deluxe Kowloon View Room.<br />\n<br />\nBlack out dates apply.",
+        "complimentaryBenefitsContent": "<strong>Standard Complimentary Benefits:</strong>\n<p>\n</p>\n<ul style=\"list-style-type: disc;\">\n    <li>Unlimited in-room wireless Internet access</li>\n    <li>Wireless telephone with VOIP technology (complimentary long-distance calls)</li>\n    <li>Complimentary HD movies</li>\n    <li>All-in-one fax/scanner/printer/photocopier with office automation and wired and wireless connections to personal electronic devices and the digital bedside panel</li>\n    <li>Use of fitness centre and swimming pool</li>\n    <li>Shoeshine box and shoe-shining service</li>\n    <li>Turn-down service</li>\n    <li>Daily fruit basket</li>\n    <li>Local telephone calls</li>\n    <li>Local daily newspaper</li>\n</ul>",
+        "complimentaryBenefitsImage": "/en/~/media/Images/Hong-Kong/02SpaWellness/The-Pool/Peninsula_pool.ashx",
+        "treatmentCategories": [
+            {
+                "CategoryId": "C01",
+                "CategoryName": "Body Massage"
+            },
+            {
+                "CategoryId": "C02",
+                "CategoryName": "Ayurvedic Influence"
+            },
+            {
+                "CategoryId": "C03",
+                "CategoryName": "Spa Essentials"
+            }
+        ],
+        "treatments": [
+            {
+                "TemplateID": "86006-813-0000000524",
+                "ActivityCode": "LST2",
+                "CategoryName": "\"Body Massage \"",
+                "Name": "\"5 Elements LaStone Therapy (2 Hours)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "8888"
+            },
+            {
+                "TemplateID": "86006-813-0000000523",
+                "ActivityCode": "LST1",
+                "CategoryName": "\"Body Massage \"",
+                "Name": "\"5 Elements LaStone Therapy (90 Mins)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "1800"
+            },
+            {
+                "TemplateID": "86006-813-0000000022",
+                "ActivityCode": "BT007",
+                "CategoryName": "\"Ayurvedic Influence \"",
+                "Name": "\"Ayurvedic - Ama Releasing Abhyanga (2 Hours)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "2200"
+            },
+            {
+                "TemplateID": "86006-813-0000000011",
+                "ActivityCode": "BT004",
+                "CategoryName": "\"Ayurvedic Influence \"",
+                "Name": "\"Ayurvedic - Kapha Stimulator (2 Hours)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "2200"
+            },
+            {
+                "TemplateID": "86006-813-0000000009",
+                "ActivityCode": "\"BT003 \"",
+                "CategoryName": "\"Ayurvedic Influence \"",
+                "Name": "\"Ayurvedic - Pitta Pacifier (2 Hours)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "2200"
+            },
+            {
+                "TemplateID": "86006-813-0000000239",
+                "ActivityCode": "ESS002",
+                "CategoryName": "\"Spa Essentials\"",
+                "Name": "\"Spa Essentials - Regenerating Eye Treatment (30mins)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "600"
+            },
+            {
+                "TemplateID": "86006-813-0000000139",
+                "ActivityCode": "ESS001",
+                "CategoryName": "\"Spa Essentials\"",
+                "Name": "\"Spa Essentials - Salt and Oil Scrub (30mins)\"",
+                "Description": "Full body massage with light to medium pressure, with essential oils to suit each individual's needs.<ul><li>Detoxifying Body Oil is a cleansing blend of citrus oil with natural diuretic properties.</li><li>A powerful blend of Tea Tree and Eucalyptus to help support the immune system.</li><li>Specially blended soothing aromatherapy oils have relaxing and sleep-enhancing properties.</li></ul>",
+                "ChargeAmount": "600"
+            }
+        ]
+    }
+}
+
+

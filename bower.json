@@ -1,7 +1,21 @@
 {
   "name": "spa-booking",
-  "private": true,
   "dependencies": {
-    "modernizr": "~2.8.1"
-  }
+    "angular": "~1.4.1",
+    "angular-bootstrap": "~0.13.0",
+    "modernizr": "~2.8.1",
+    "jQuery": "1.9.1"
+  },
+  "version": "0.0.1",
+  "authors": [
+    "Jubal Mabaquiao <jubal.mabaquiao@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

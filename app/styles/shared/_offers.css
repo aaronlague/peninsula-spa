@@ -1,0 +1,69 @@
+.partial-offers {}
+
+    .partial-offers .main-offer
+    {
+        background-color: #fff;
+        margin-bottom: 20px;
+    }
+
+        .partial-offers .main-offer h5 {
+            font-size: 22px;
+            margin-bottom:8px;
+        }
+
+        .partial-offers .main-offer img
+        {
+            display:block;
+            width: 100%;
+        }
+
+        .partial-offers .main-offer .details
+        {
+            padding: 30px 25px;
+        }
+
+        @media only screen and (max-width: 1279px)
+        {
+            .partial-offers .main-offer .details
+            {
+                padding: 20px 20px 20px 5px;
+            }
+
+            .partial-offers .main-offer .richtext
+            {
+                max-height: 100px;
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+        }
+            .no-mediaqueries.mq-1024px .partial-offers .main-offer .details
+            {
+                padding: 20px 20px 20px 5px;
+            }
+
+            .no-mediaqueries.mq-1024px .partial-offers .main-offer .richtext
+            {
+                max-height: 100px;
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+
+        @media only screen and (min-width: 1440px)
+        {
+            .partial-offers .main-offer .details {
+                padding: 35px 35px 35px 20px;
+            }
+        }
+            .no-mediaqueries.mq-1440px .partial-offers .main-offer .details {
+                padding: 35px 35px 35px 20px;
+            }
+
+    .partial-offers .promo-tile .info
+    {
+        min-height: 135px;
+    }
+
+    .partial-offers .promo-tile .info.no-description
+    {
+        min-height: 86px;
+    }
