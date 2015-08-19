@@ -10,6 +10,7 @@
 
         .value('API', {
             languageCode: 'en',
+            hotelCode: 'PHK',
             hotelJSON: 'http://www.mocky.io/v2/55d05fd5de9fdef104fe3727',
             unavailableDates: 'http://www.mocky.io/v2/55d0960dde9fdeaa08fe3743',
             availableTimes: 'http://www.mocky.io/v2/55d0962ade9fdeaa08fe3744',
@@ -51,6 +52,9 @@
 
                 var request = $http({
                     method: 'get',
+                    params: {
+                        hotelCode: API.hotelCode
+                    },
                     url: API.hotelJSON
                 });
 
