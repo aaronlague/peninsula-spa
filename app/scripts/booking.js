@@ -53,7 +53,7 @@
                 var request = $http({
                     method: 'get',
                     params: {
-                        hotelCode: API.hotelCode
+                        hotel: API.hotelCode
                     },
                     url: API.hotelJSON
                 });
@@ -150,8 +150,6 @@
                     data: $.param(requestData),
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 });
-
-                console.log(requestData);
 
                 request.success(function (data) {
                     if (data && !data.result) {
