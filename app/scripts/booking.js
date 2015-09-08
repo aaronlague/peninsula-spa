@@ -47,6 +47,7 @@
             $scope.booking = {};
             $scope.disabledDates = [];
             $scope.maxDate = datepickerConfig.maxDate;
+            $scope.parseInt = parseInt;
 
             $scope.init = function () {
 
@@ -375,7 +376,8 @@
                     email: $scope.booking.email,
                     cardHolderName: $scope.booking.ccname,
                     cardNumber: $scope.booking.ccnumber,
-                    cardExpiryMM: '0' + ($scope.booking.ccmonth + 1),
+                    //cardExpiryMM: $scope.booking.ccmonth,
+                    cardExpiryMM: $scope.booking.ccmonth < 9 ? '0' + (parseInt($scope.booking.ccmonth) + 1) : (parseInt($scope.booking.ccmonth) + 1),
                     cardExpiryYY: $scope.booking.ccyear,
                     staying: $scope.booking.hotel || 'no',
                     specialRequest: $scope.booking.request || '',
