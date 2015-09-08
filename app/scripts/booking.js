@@ -155,6 +155,7 @@
                     if (data && !data.result) {
                         $scope.availableTimes = data.times;
                         $scope.timepicker = true;
+                        $scope.apiErrorTime = undefined;
                     } else {
                         $scope.apiErrorTime = data;
                     }
@@ -332,8 +333,9 @@
 
             $scope.$watch('booking.package', function (val) {
                 if (val) {
-                    var message = $filter('filter')($scope.treatmentPackages, {TemplateID: val});
-                    $scope.treatmentDescription = $sce.trustAsHtml(message[0].Description);
+                    var treatment = $filter('filter')($scope.treatmentPackages, {TemplateID: val});
+                    $scope.treatmentDescription = $sce.trustAsHtml(treatment[0].Description);
+                    $scope.treatmentPrice = treatment[0].ChargeAmount;
                 }
             });
 
@@ -373,7 +375,7 @@
                     email: $scope.booking.email,
                     cardHolderName: $scope.booking.ccname,
                     cardNumber: $scope.booking.ccnumber,
-                    cardExpiryMM: $scope.booking.ccmonth,
+                    cardExpiryMM: '0' + ($scope.booking.ccmonth + 1),
                     cardExpiryYY: $scope.booking.ccyear,
                     staying: $scope.booking.hotel || 'no',
                     specialRequest: $scope.booking.request || '',

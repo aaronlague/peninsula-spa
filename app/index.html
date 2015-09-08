@@ -427,8 +427,7 @@
                             <li class="summary__detail"><span class="summary__label">Time:</span> {{
                                 ampmTime(treatmentTime) | date:'h:mm a' }}
                             </li>
-                            <!-- TODO: fix console error here:
-                            <li class="summary__detail"><span class="summary__label">Price and Duration:</span> HKD {{ (treatmentPackages | filter: { TemplateID: booking.package })[0]['ChargeAmount'] | number }} for {{ getTreatmentDuration(treatmentPackage) }}</li> -->
+                            <li class="summary__detail"><span class="summary__label">Price and Duration:</span> {{ treatmentPrice ? treatmentPrice : '' | currency:"HKD " }} for {{ treatmentPackage? getTreatmentDuration(treatmentPackage) : '' }}</li>
                         </ul>
                         <br>
 
@@ -495,8 +494,8 @@
                     contact us at +852 2696 6682.</p>
 
                 <div class="ics">
-                    <button type="button" class="button--ics"><i class="icon icon--calendar"></i> Add to calendar
-                    </button>
+                    <a ng-href="{{ submitSuccess.calendarUrl }}" class="button button--ics"><i class="icon icon--calendar"></i> Add to calendar
+                    </a>
                 </div>
             </div>
 
