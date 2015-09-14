@@ -5,7 +5,6 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
-
 input {
   font: 12px/1 "Futura Book",Helvetica,Arial,sans-serif;
   height: auto;
@@ -546,4 +545,9 @@ $color-tooltipbg: lightgrey;
   &--ics {
     padding: 12px 20px;
   }
+}
+
+.footnote {
+  text-align: center;
+  margin-bottom: 1em;
 }

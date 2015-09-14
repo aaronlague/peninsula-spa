@@ -35,7 +35,6 @@
     </div>
 
     <form name="bookingForm" ng-submit="bookingFormSubmit()" novalidate>
-
         <div class="formpage formpage--1" ng-show="activeFormPage === 1">
             <div class="column column--half">
                 <h5 class="formpage__steptitle">1. Select a treatment</h5>
@@ -156,6 +155,8 @@
 
                     <p ng-if="!booking.package || !booking.datetime"><b>Complete steps 1 to 3 to get a quote</b></p>
                 </div>
+
+                <p class="footnote" ng-if="serviceCharge"><em>All Prices are in Hong Kong dollars and subject to {{ serviceCharge }} service charge.</em></p>
 
                 <div class="formpage__navigator">
                     <button type="button" href="#" class="formpage__btn formpage__btn--next" ng-disabled="!pageIsValid1"
@@ -336,19 +337,19 @@
             <div class="column column--third">
 
                 <div class="field field--radio">
-                    <label for="booking.hotel">Will you be staying at the hotel?</label>
-                    <input type="hidden" name="booking.hotel" ng-model="booking.hotel" ng-value="booking.hotel">
+                    <label for="booking.hotel">Will you be staying at the hotel? *</label>
+                    <input type="hidden" name="booking.hotel" ng-model="booking.hotel" ng-value="booking.hotel" required>
 
                     <div class="btn-group radio">
-                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="true">Yes</label>
-                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="false">No</label>
+                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="'yes'">Yes</label>
+                        <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="'no'">No</label>
                     </div>
                 </div>
 
                 <div class="field field--textarea"
                      ng-class="{ 'error': (bookingForm['booking.request'].$touched && bookingForm['booking.request'].$invalid) }">
                     <label for="booking.request">Special Request</label>
-                    <textarea name="booking.request" ng-pattern="regexEnglish" ng-model="booking.request"></textarea>
+                    <textarea name="booking.request" ng-model="booking.request"></textarea>
                     <span class="error__message"
                           ng-if="bookingForm['booking.request'].$touched && bookingForm['booking.request'].$error.pattern">Please enter only letters.</span>
                 </div>
@@ -396,7 +397,6 @@
                             <li class="summary__detail"><span class="summary__label">Expiration Date</span> {{
                                 patientCCMonth }} / {{ patientCCYear }}
                             </li>
-                            <!-- <li class="summary__detail"><span class="summary__label">Preferred Gender of Therapist</span> {{ therapistGender }}</li> -->
                             <li class="summary__detail"><span
                                     class="summary__label">Will you be staying at the hotel?</span> {{ !booking.hotel ?
                                 (booking.hotel!=undefined ? 'No': 'Not specified') : 'Yes' }}
@@ -421,9 +421,9 @@
                                                        tooltip-class="field__tooltip"
                                                        tooltip-html="treatmentDescription"><i
                                         class="field__tooltip-icon"></i></a></li>
-                            <li class="summary__detail"><span class="summary__label">Date:</span> {{ treatmentDate |
-                                date }}
-                            </li>
+
+                            <li class="summary__detail"><span class="summary__label">Preferred gender of therapist:</span> {{ therapistGender }}</li>
+                            <li class="summary__detail"><span class="summary__label">Date:</span> {{ treatmentDate | date }}</li>
                             <li class="summary__detail"><span class="summary__label">Time:</span> {{
                                 ampmTime(treatmentTime) | date:'h:mm a' }}
                             </li>
@@ -481,6 +481,7 @@
                 <ul>
                     <li class="summary__detail"><span class="summary__label">Name:</span>  {{ booking.firstname }} {{ booking.lastname }}</li>
                     <li class="summary__detail"><span class="summary__label">Treatment:</span> {{ treatmentPackage }}</li>
+                    <li class="summary__detail"><span class="summary__label">Preferred gender of therapist:</span> {{ therapistGender }}</li>
                     <li class="summary__detail"><span class="summary__label">Date:</span> {{ treatmentDate | date:'fullDate' }}</li>
                     <li class="summary__detail"><span class="`summary__label">Time:</span> {{ ampmTime(treatmentTime)
                         | date:'h:mm a' }}</li>

@@ -65,6 +65,7 @@
                         $scope.treatmentTypes = data.hotel.treatmentCategories;
                         $scope.treatmentPackages = data.hotel.treatments;
                         $scope.booking.hotelCode = data.hotel.id;
+                        $scope.serviceCharge = data.hotel.serviceCharge || '10%';
                         $scope.viewReady = true;
                     }
                     else {
@@ -285,7 +286,8 @@
                 'booking.ccname',
                 'booking.ccnumber',
                 'booking.ccyear',
-                'booking.ccmonth'
+                'booking.ccmonth',
+                'booking.hotel'
             ];
 
             $scope.$watchGroup(requiredFields1, function (newValues) {
