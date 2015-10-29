@@ -147,6 +147,14 @@ $color-tooltipbg: lightgrey;
       width: 100%;
     }
   }
+    &--narrow-more {
+    width: 80%;
+    margin-left: 0;
+    text-align: left;
+    .ddown {
+      width: 100%;
+    }
+  }
   &--summary {
     border: 1px solid $color-lightbrown;
     text-align: center;

@@ -103,7 +103,7 @@
 
                 </div>
 
-                <h5 class="formpage__steptitle">2. Select desire date</h5>
+                <h5 class="formpage__steptitle">2. Select a desire date</h5>
 
                 <p ng-if="gettingUnvailableDates" ><i class="icon icon--loading"></i> Fetching available dates&hellip;</p>
                 <br>
@@ -120,7 +120,7 @@
             </div>
 
             <div class="column column--half">
-                <h5 class="formpage__steptitle">3. Select available time</h5>
+                <h5 class="formpage__steptitle">3. Select an available time</h5>
 
                 <p ng-if="gettingAvailableTime" ><i class="icon icon--loading"></i> Fetching available times&hellip;</p>
                 <p class="error" ng-if="!gettingAvailableTime && apiErrorTime">
@@ -142,8 +142,7 @@
 
                 <br>
 
-                <p>Not all treatments are available for online booking. If you do not find the treatment you desire,
-                    please contact us at +852 2696 6682 for enquiries.</p>
+                <p>Please note that some treatments are available exclusively by phone. For booking or enquiries about these treatments, please contact our spa team directly at +852 2696 6682. </p>
                 <br>
 
                 <div class="field field--summary">
@@ -329,22 +328,40 @@
                     </div>
                     <span class="error__message" ng-if="ccExpire <= booking.datetime">Please enter a card that expires after your checkout date.</span>
                 </div>
-                <p>We will only charge the credit card if the customer do not show up for the appointment after
-                    confirmation on the booking.</p>
+                <p>Your credit card will be used to guarantee the booking and will only be charged in case of no-show or late cancellations.</p>
 
             </div>
 
             <div class="column column--third">
 
-                <div class="field field--radio">
+                <!-- <div class="field field--radio">
                     <label for="booking.hotel">Will you be staying at the hotel? *</label>
                     <input type="hidden" name="booking.hotel" ng-model="booking.hotel" ng-value="booking.hotel" required>
 
                     <div class="btn-group radio">
                         <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="'yes'">Yes</label>
                         <label class="btn btn-primary" ng-model="booking.hotel" btn-radio="'no'">No</label>
+                    </div>                    
+                </div> -->
+
+                <div class="field field--dropdown field--narrow-more">
+                    <label for="booking.hotel">Will you be staying at the hotel? *: *</label>
+                    <input type="hidden" name="booking.hotel" ng-model="booking.hotel" ng-value="booking.hotel"
+                           required>
+
+                    <div class="btn-group ddown" dropdown keyboard-nav>
+                        <button type="button" class="btn btn-default ddown__button ng-binding" dropdown-toggle=""
+                                aria-haspopup="true" aria-expanded="false">
+                            {{ hotel || '&nbsp;' }}
+                            <span class="ddown__caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="" ng-click="setHotelStay('none', 'Not Specified')">Not Specified</a></li>
+                            <li><a href="" ng-click="setHotelStay('yes', 'Yes')">Yes</a></li>
+                            <li><a href="" ng-click="setHotelStay('no', 'No')">No</a></li>
+                        </ul>
                     </div>
-                </div>
+                </div>                
 
                 <div class="field field--textarea"
                      ng-class="{ 'error': (bookingForm['booking.request'].$touched && bookingForm['booking.request'].$invalid) }">
@@ -354,8 +371,6 @@
                           ng-if="bookingForm['booking.request'].$touched && bookingForm['booking.request'].$error.pattern">Please enter only letters.</span>
                 </div>
 
-                <p>Please refer to the <a href="#">Data Privacy and Security Policy</a> for information about making
-                    reservations through our website.</p>
 
             </div>
 
@@ -431,7 +446,7 @@
                         </ul>
                         <br>
 
-                        <p>Please note that your treatment is not confirmed until you are contacted by The Spa.</p>
+                        <p>Our spa team will contact you shortly to confirm your booking. For enquiries, please contact us at +852 2696 6682.</p>
                         <br>
                         <input type="hidden" name="booking.subscribe" ng-model="booking.subscribe"
                                ng-value="booking.subscribe">
@@ -445,6 +460,8 @@
                             <label class="checkbox" ng-model="booking.agree" btn-checkbox="">I have read and accept
                                 the </label> <a href="#">Terms &amp; Conditions.</a>
                         </div>
+                        <p>Please refer to the <a href="#">Data Privacy and Security Policy</a> for information about making
+                            reservations through our website.</p>                        
                     </div>
                 </div>
             </div>
@@ -469,7 +486,7 @@
         <div class="formpage formpage--4" ng-show="activeFormPage === 4">
             <div class="column column--full">
                 <div class="thankyou__header">
-                    <p><strong>Thank you!</strong></p>
+                    <p><strong>Thank you for choosing The Peninsula Spa</strong></p>
 
                     <p>Your booking number is {{ submitSuccess.confirmationNumber }}</p>
                 </div>
@@ -491,8 +508,8 @@
                 </ul>
             </div>
             <div class="column column--third" class="thankyou__calendar">
-                <p>We will soon contact you to confirm your booking. If you have any questions please feel free to
-                    contact us at +852 2696 6682.</p>
+                <p>For assistance or to make changes to your appointment, please call us on +852 1234 5678 </p>
+                <p>Penalty will be incurred for any treatment or programme not cancelled at least 24 hours prior to appointment. Cancellation within 12 hours will incur a 100% charge.</p>
 
                 <div class="ics">
                     <a ng-href="{{ submitSuccess.calendarUrl }}" class="button button--ics"><i class="icon icon--calendar"></i> Add to calendar
@@ -530,7 +547,7 @@
 
 <script>
     /* TODO: dynamically fill with appropriate variables based on environment */
-    angular.module('spa.booking')
+    /*angular.module('spa.booking')
         .value('API', {
             languageCode: 'en',
             hotelCode: 'PHK',
@@ -538,7 +555,7 @@
             unavailableDates: 'http://www.peninsula.isobar.hk/en/SpaAPI/getTreatmentDates',
             availableTimes: 'http://www.peninsula.isobar.hk/en/SpaAPI/getTreatmentTimes',
             bookingFormSubmit: 'http://www.peninsula.isobar.hk/en/SpaAPI/createBooking'
-        });
+        });*/
 </script>
 
 </body>
