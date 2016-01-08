@@ -5,7 +5,7 @@
 
         .constant('timepickerConfig', {
             // available options for reservation time
-            timeOptions: ['9:00', '10:30', '12:00', '13:30', '15:00', '16:30', '18:00', '19:30', '21:00']
+            timeOptions: ['9:00', '10:30', '12:00', '13:30', '15:00', '16:30', '18:00', '19:30', '21:00', '22:00']
         })
 
         .value('API', {
@@ -15,7 +15,7 @@
             unavailableDates: 'http://www.mocky.io/v2/55d0960dde9fdeaa08fe3743',
             availableTimes: 'http://www.mocky.io/v2/55d0962ade9fdeaa08fe3744',
             bookingFormSubmit: 'http://www.mocky.io/v2/55c7ebdc0c3c40d50c030323'
-        })
+        }) 
 
         .constant('datepickerConfig', {
             formatDay: 'dd',
@@ -27,7 +27,7 @@
             datepickerMode: 'day',
             minMode: 'day',
             maxMode: 'day',
-            showWeeks: false,
+            showWeeks: false, 
             startingDay: 0,
             yearRange: 2,
             minDate: (function () {
@@ -39,7 +39,7 @@
             })(),
             shortcutPropagation: true
         })
-
+ 
         .controller('MainController', function ($scope, $http, $window, dateFilter, $timeout, $sce, $filter, datepickerConfig, timepickerConfig, API) {
 
             $scope.detect = $window.Modernizr;
@@ -50,6 +50,8 @@
             $scope.parseInt = parseInt;
 
             $scope.init = function () {
+                /*var availableTimes = timepickerConfig.timeOptions.length
+                alert(availableTimes);*/
 
                 var request = $http({
                     method: 'get',

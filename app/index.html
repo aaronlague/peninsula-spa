@@ -24,6 +24,14 @@
     <!-- build:js scripts/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
+
+    <!-- build:css styles/booking.css -->
+    <link rel="stylesheet" type="text/css" href="styles/slick.css"/>
+    <!-- endslick -->
+
+    <!-- build:js scripts/slick.js -->
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>-->
+    <!-- endslick -->
 </head>
 <body ng-cloak>
 <div class="page" ng-controller="MainController" ng-init="init()">
@@ -132,11 +140,16 @@
 
                 <div class="field field--timepicker">
                     <div class="btn-group timepicker">
-                        {{ availableTimes.data.times }}
-                        <button ng-repeat="time in availableTimes" type="button" class="btn btn-default timepicker__btn"
-                                ng-class="{ active: treatmentTime === time }" ng-disabled="!timepicker"
-                                ng-click="setTreatmentTime(time)">{{ ampmTime(time) | date:'h:mm a' }}
-                        </button>
+                        <div class="your-class">
+                            
+                            {{ availableTimes.data.times }}
+                            
+                                <button ng-repeat="time in availableTimes" type="button" class="btn btn-default timepicker__btn"
+                                        ng-class="{ active: treatmentTime === time }" ng-disabled="!timepicker"
+                                        ng-click="setTreatmentTime(time)">{{ ampmTime(time) | date:'h:mm a' }}
+                                </button>
+                            
+                        </div>
                     </div>
                 </div>
 
@@ -557,6 +570,46 @@
             bookingFormSubmit: 'http://www.peninsula.isobar.hk/en/SpaAPI/createBooking'
         });*/
 </script>
+
+  <script type="text/javascript" src="scripts/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="scripts/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="scripts/slick.min.js"></script>
+
+  <script type="text/javascript">
+    function spaArrow() {
+        $( ".slick-prev" ).after( "<img id='prev_clone' src='/images/pen_spa_arrow_up.png' alt='prev'/>" );
+        $( ".slick-next" ).after( "<img id='next_clone' src='/images/pen_spa_arrow_down.png' alt='next'/>" );
+
+        $( "#prev_clone" ).click(function() {
+          $('.slick-prev').click();
+        });
+
+        $( "#next_clone" ).click(function() {
+          $('.slick-next').click();
+        });
+    }
+    $(document).ready(function(){
+      /*$('.your-class .timepicker__btn').wrap( "<div></div>" );
+        var divs = $("div > div");
+        for(var i = 0; i < divs.length; i+=3) {
+          divs.slice(i, i+3).wrapAll("<div class='new'></div>");
+        }*/
+        var a = $('.timepicker__btn');
+        do $(a.slice(0,3)).wrapAll('<div />');   
+        while((a = a.slice(3)).length>0);
+        $('.timepicker__btn').css('width','31.3%');
+
+        $('.your-class').slick({
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          vertical: true,
+        });
+        
+        spaArrow();
+
+    });
+    
+  </script>
 
 </body>
 </html>
